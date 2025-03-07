@@ -7,5 +7,5 @@ def transcribe_audio(file_path):
 
 # Only run this if the script is executed directly
 if __name__ == "__main__":
-    text = transcribe_audio("audio.mp3")
+    text = transcribe_audio("recorded_audio.wav")
     print(text)

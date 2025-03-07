@@ -9,7 +9,7 @@ engine.setProperty('volume', 1.0)  # Volume (0.0 to 1.0)
 
 while True:
     if keyboard.read_key() == "p":
-        text = transcribe_audio("audio.mp3")
+        text = transcribe_audio("C:\Users\DJkitty\Desktop\ai app\audio.mp3")
         response = get_llama_response(text)
         engine.say(response)  # Concatenate the strings
         print("Ollama's Response:", response)
