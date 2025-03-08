@@ -1,6 +1,7 @@
 from voicetotext import transcribe_audio
 from texttoollama import get_llama_response
 from texttospeach import speak_text
+import re
 
 def record_audio(audio_file):
     import sounddevice as sd
@@ -39,6 +40,10 @@ def record_audio(audio_file):
     print("Recording saved.")
     return True
 
+def filter_thoughts(text):
+    """Remove content inside <think> tags."""
+    return re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
+
 def main():
     while True:
         audio_file = "recorded_audio.wav"
@@ -53,8 +58,9 @@ def main():
             # Step 3: Print or use the response
             print("Ollama's Response:", response_text)
 
-            # Step 4: Convert response text to speech
-            speak_text(response_text)
+            # Step 4: Filter and convert response text to speech
+            filtered_text = filter_thoughts(response_text)
+            speak_text(filtered_text)
 
 if __name__ == "__main__":
     main()
