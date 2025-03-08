@@ -12,14 +12,14 @@ def record_audio(audio_file):
     SAMPLE_RATE = 44100  # CD-quality audio
     CHANNELS = 1  # Mono audio
 
-    print("Press and hold [Space] to record...")
-    while not keyboard.is_pressed('space'):
+    print("Press and hold [Insert] to record...")
+    while not keyboard.is_pressed('Insert'):
         pass  # Wait for key press
     print("Recording started...")
 
     frames = []
     with sd.InputStream(samplerate=SAMPLE_RATE, channels=CHANNELS, dtype='int16', device=None) as stream:
-        while keyboard.is_pressed('space'):
+        while keyboard.is_pressed('Insert'):
             data, _ = stream.read(1024)
             frames.append(data)
 
