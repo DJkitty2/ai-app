@@ -52,6 +52,7 @@ def main():
             text = transcribe_audio(audio_file)
 
             # Step 2: Send it to Ollama
+            print("Send it to Ollama")
             response = get_llama_response(text)
             response_text = response.content if hasattr(response, 'content') else str(response)
 
@@ -59,6 +60,7 @@ def main():
             print("Ollama's Response:", response_text)
 
             # Step 4: Filter and convert response text to speech
+            print("Filter and convert response text to speech")
             filtered_text = filter_thoughts(response_text)
             speak_text(filtered_text)
 
