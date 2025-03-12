@@ -2,7 +2,7 @@ from TTS.api import TTS
 import simpleaudio as sa
 
 def speak_text(text):
-    tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC", progress_bar=True, gpu=False)
+    tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DCA", progress_bar=True, gpu=False)
     tts.tts_to_file(text=text, file_path="output.wav")
 
     # Play the audio
@@ -13,3 +13,4 @@ def speak_text(text):
 if __name__ == "__main__":
     sample_text = "sigma sigma boy sigma boy."
     speak_text(sample_text)
+
