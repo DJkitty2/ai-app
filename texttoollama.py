@@ -4,7 +4,7 @@ import json
 
 # Conversation history to maintain context (limit to 20 messages for memory control)
 conversation_history = []
-MAX_HISTORY = 20
+MAX_HISTORY = 50
 
 # File to store conversation history
 HISTORY_FILE = "conversation_history.json"
