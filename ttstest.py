@@ -1,11 +1,11 @@
-from TTS.utils.manage import ModelManager
+import os 
 
-def list_tts_voices():
-    manager = ModelManager()
-    models = manager.list_models()
-    print("Available TTS Voices:")
-    for model in models:
-        print(f"- {model}")
+name = os.name
+print(os) 
 
-if __name__ == "__main__":
-    list_tts_voices()
+if name == "Windows":
+    key = Insert
+    print(key)
+else:
+    key = esc
+    print(key)

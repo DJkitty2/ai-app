@@ -10,5 +10,13 @@
     {
         "role": "assistant",
         "content": "Neo: DJkitty! Hello to you too! Ready to dive into something fun? \u2728"
+    },
+    {
+        "role": "user",
+        "content": " Hello?"
+    },
+    {
+        "role": "assistant",
+        "content": "DJkitty: *adjusts imaginary glasses* Oh, you\u2019re *here*. Just\u2026 observing.  Don\u2019t expect a lengthy explanation. \ud83d\ude09"
     }
 ]

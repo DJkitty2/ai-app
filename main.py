@@ -2,6 +2,16 @@ from voicetotext import transcribe_audio
 from texttoollama import get_llama_response
 from texttospeach import speak_text
 import re
+import os
+
+name = os.name
+
+if name == "nt":
+    key = Insert
+    print(key)
+else:
+    key = "Esc"
+    print(key)
 
 def record_audio(audio_file):
     import sounddevice as sd
@@ -9,17 +19,19 @@ def record_audio(audio_file):
     import wave
     import keyboard
 
+    
+    
     SAMPLE_RATE = 44100  # CD-quality audio
     CHANNELS = 1  # Mono audio
 
-    print("Press and hold [Insert] to record...")
-    while not keyboard.is_pressed('Insert'):
+    print("Press and hold "+key+" to record...")
+    while not keyboard.is_pressed(key):
         pass  # Wait for key press
     print("Recording started...")
 
     frames = []
     with sd.InputStream(samplerate=SAMPLE_RATE, channels=CHANNELS, dtype='int16', device=None) as stream:
-        while keyboard.is_pressed('Insert'):
+        while keyboard.is_pressed(key):
             data, _ = stream.read(1024)
             frames.append(data)
 
