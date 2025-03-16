@@ -1,11 +1,11 @@
 import os 
 
 name = os.name
-print(os) 
+print(name) 
 
-if name == "Windows":
-    key = Insert
+if name == "nt":
+    key = "Insert"
     print(key)
 else:
-    key = esc
+    key = "esc"
     print(key)
