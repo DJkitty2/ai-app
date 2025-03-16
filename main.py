@@ -7,7 +7,7 @@ import os
 name = os.name
 
 if name == "nt":
-    key = Insert
+    key = "Insert"
     print(key)
 else:
     key = "Esc"
