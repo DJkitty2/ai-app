@@ -25,7 +25,7 @@ def load_core_memory():
     if os.path.exists(CORE_MEMORY_FILE):
         with open(CORE_MEMORY_FILE, "r") as file:
             return json.load(file)
-    return {}
+    return {"example_fact": "DJkitty loves AI experiments"}  # Default example
 
 # Save core memory
 def save_core_memory(core_memory):
@@ -37,6 +37,15 @@ def add_to_core_memory(key, value):
     core_memory = load_core_memory()
     core_memory[key] = value
     save_core_memory(core_memory)
+
+# Ensure core memory file exists with example format
+def initialize_core_memory():
+    if not os.path.exists(CORE_MEMORY_FILE):
+        save_core_memory({
+            "example_fact": "DJkitty loves AI experiments",
+            "preferred_model": "gemma3:1b",
+            "favorite_color": "purple"
+        })
 
 # Define system prompt
 system_prompt = """
@@ -92,5 +101,6 @@ def get_llama_response(text):
     return response_text
 
 if __name__ == "__main__":
+    initialize_core_memory()
     example_text = "Hello, how are you?"
     print(get_llama_response(example_text))
