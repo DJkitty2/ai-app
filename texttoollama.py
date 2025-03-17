@@ -87,7 +87,7 @@ def get_llama_response(text):
     # Send conversation history to Ollama
     client = ollama.Client(host="http://localhost:11434")
     response = client.chat(
-        model="gemma3:1b", 
+        model="gemma3:12b", 
         messages=conversation_history
     )
     
