@@ -1,6 +1,21 @@
 import ollama
 import os
 import json
+import psutil
+
+total_memory_bytes = psutil.virtual_memory().total
+
+# Convert to gigabytes
+total_memory_gb = total_memory_bytes / (1024 ** 3)
+model = "gemma3:1b"
+
+if total_memory_gb < 10:
+    print("under 10")
+    print("keeping gemma3:1b")
+else:
+    print("over 10")
+    model = "gemma3:12b"
+    print("using gemma3:12b")
 
 # Conversation history to maintain context (limit to 50 messages)
 conversation_history = []
@@ -43,7 +58,7 @@ def initialize_core_memory():
     if not os.path.exists(CORE_MEMORY_FILE):
         save_core_memory({
             "example_fact": "DJkitty loves AI experiments",
-            "preferred_model": "gemma3:1b",
+            "preferred_model": "gemma3:12b",
             "favorite_color": "purple"
         })
 
@@ -87,7 +102,7 @@ def get_llama_response(text):
     # Send conversation history to Ollama
     client = ollama.Client(host="http://localhost:11434")
     response = client.chat(
-        model="gemma3:12b", 
+        model=""+model+"", 
         messages=conversation_history
     )
     

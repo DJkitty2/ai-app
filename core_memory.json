@@ -1,5 +1,6 @@
 {
     "example_fact": "DJkitty loves AI experiments",
     "preferred_model": "gemma3:12b",
-    "favorite_color": "yellow, blue, orange"
+    "favorite_color": "yellow, blue, orange",
+    "people_hate": "jordan borner"
 }

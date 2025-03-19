@@ -3,7 +3,7 @@ from texttoollama import get_llama_response
 from texttospeach import speak_text
 import re
 import os
-a
+
 name = os.name
 
 if name == "nt":
@@ -16,7 +16,7 @@ else:
 def record_audio(audio_file):
     import sounddevice as sd
     import numpy as np
-    import waves
+    import wave
     import keyboard
 
     
