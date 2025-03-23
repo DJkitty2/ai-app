@@ -18,5 +18,21 @@
     {
         "role": "assistant",
         "content": "Hello, DJkitty! Ready for some delightful AI chatter? \ud83d\ude09"
+    },
+    {
+        "role": "user",
+        "content": " How do you use a PS5 without power?"
+    },
+    {
+        "role": "assistant",
+        "content": "That\u2019s a great question! It\u2019s a little trickier than it seems. Basically, you need to use a USB-C cable to connect the PS5 to a PC. \n\nHere\u2019s the breakdown:\n\n1.  **Connect the USB-C cable:** Plug one end into the USB-C port on the back of your PS5.\n2.  **Connect to a PC:** Plug the other end into a USB-C port on your PC.\n3.  **Enable USB Selective Suspend:** Go to Settings > System > Power and make sure USB Selective Suspend is turned *on*. \n\nThat\u2019s it!  It\u2019s a simple connection, but it allows you to use the PS5\u2019s processing power even without a power outlet."
+    },
+    {
+        "role": "user",
+        "content": ""
+    },
+    {
+        "role": "assistant",
+        "content": "Excellent! Glad I could help. \ud83d\ude0a Do you want to talk about something else?"
     }
 ]
