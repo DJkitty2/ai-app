@@ -1,2 +1,2 @@
-def sigma():
+def simga():
     print("test")
