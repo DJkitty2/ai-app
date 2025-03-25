@@ -1,3 +1,3 @@
-import test from sigma
+import test
 
-sigma()
+test.sigma()

@@ -7,15 +7,15 @@ total_memory_bytes = psutil.virtual_memory().total
 
 # Convert to gigabytes
 total_memory_gb = total_memory_bytes / (1024 ** 3)
-model = "gemma3:1b"
+model = "qwen2.5:3b"
 
 if total_memory_gb < 10:
     print("under 10")
-    print("keeping gemma3:1b")
+    print("keeping qwen2.5:3b")
 else:
     print("over 10")
-    model = "gemma3:12b"
-    print("using gemma3:12b")
+    model = "qwen2.5:14b"
+    print("using qwen2.5:14b")
 
 # Conversation history to maintain context (limit to 50 messages)
 conversation_history = []
@@ -30,6 +30,9 @@ def load_conversation_history():
         with open(HISTORY_FILE, "r") as file:
             conversation_history = json.load(file)
 
+def Get_OS():
+   return {"os_name": Get_OS}
+
 # Save the last 10 exchanges
 def save_conversation_history():
     with open(HISTORY_FILE, "w") as file:
@@ -40,7 +43,7 @@ def load_core_memory():
     if os.path.exists(CORE_MEMORY_FILE):
         with open(CORE_MEMORY_FILE, "r") as file:
             return json.load(file)
-    return {"example_fact": "DJkitty loves AI experiments"}  # Default example
+    return {"example_fact": "info"}  # Default example
 
 # Save core memory
 def save_core_memory(core_memory):
@@ -57,10 +60,17 @@ def add_to_core_memory(key, value):
 def initialize_core_memory():
     if not os.path.exists(CORE_MEMORY_FILE):
         save_core_memory({
-            "example_fact": "DJkitty loves AI experiments",
-            "preferred_model": "gemma3:12b",
-            "favorite_color": "purple"
+            "example_fact": "info",
+            "preferred_model": "info",
+            "favorite_color": "info"
         })
+
+# Mathematical functions
+def add_two_numbers(a, b):
+    return a + b
+
+def subtract_two_numbers(a, b):
+    return a - b
 
 # Define system prompt
 system_prompt = """
@@ -77,6 +87,12 @@ Neo should keep responses short and engaging. If DJkitty doesn’t answer a ques
 Core Memory:
 {core_memory}
 """
+
+available_functions = {
+    "add": add_two_numbers,
+    "subtract": subtract_two_numbers,
+    "Get_OS": Get_OS
+}
 
 def get_llama_response(text):
     """Send text to Ollama and return the AI-generated response."""
@@ -102,20 +118,36 @@ def get_llama_response(text):
     # Send conversation history to Ollama
     client = ollama.Client(host="http://localhost:11434")
     response = client.chat(
-        model=""+model+"", 
-        messages=conversation_history
-    )
+        model=model, 
+        messages=conversation_history,
+        tools=[add_two_numbers, subtract_two_numbers, Get_OS],
+)
     
     # Extract and append AI response to maintain context
     response_text = response["message"]["content"]
+    
+    # Detect tool calls in the response
+    if "add" in response_text or "subtract" in response_text:
+        # Example parsing logic for tool calls
+        # This should be replaced with actual logic to extract parameters from response_text
+        if "add" in response_text:
+            a, b = 2, 3  # Example values, should parse from response
+            print(f"Calling add_two_numbers with a={a}, b={b}")
+            response_text = f"The result of adding is: {add_two_numbers(a, b)}"
+        elif "subtract" in response_text:
+            a, b = 5, 2  # Example values, should parse from response
+            print(f"Calling subtract_two_numbers with a={a}, b={b}")
+            response_text = f"The result of subtracting is: {subtract_two_numbers(a, b)}"
+    
     conversation_history.append({"role": "assistant", "content": response_text})
     
     # Save updated conversation history
     save_conversation_history()
     
-    return response_text
+    print("Ollama Response:", response)  # Debugging
+    response_text = response["message"]["content"]
 
 if __name__ == "__main__":
     initialize_core_memory()
-    example_text = "Hello, how are you?"
+    example_text = "what is my os"
     print(get_llama_response(example_text))
