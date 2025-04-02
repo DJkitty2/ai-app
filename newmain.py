@@ -1,5 +1,6 @@
 from RealtimeSTT import AudioToTextRecorder
 from texttoollama import get_llama_response
+from texttospeach import speak_text
 import re
 import os
 import sounddevice as sd
@@ -10,34 +11,51 @@ def filter_thoughts(text):
     """Remove content inside <think> tags."""
     return re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
 
-
-
 def main():
     recorder = AudioToTextRecorder()
     name = os.name
 
+    recorder.start()
     if name == "nt":
-        key = "Insert"
-        print(key)
+        record_key = "Insert"
+        exit_key = "Ctrl+Esc"
     else:
-        key = "Esc"
-        print(key)
+        record_key = "Esc"
+        exit_key = "Ctrl+Esc"
 
-    print("Press " + key + " to record...")
+    print(f"Press {record_key} to start/stop recording, or {exit_key} to exit...")
 
     while True:
-        """start recording"""
-        keyboard.wait(key, suppress=True)
+        """Start recording"""
+        keyboard.wait(record_key, suppress=True)
+        print("Recording started...")
         recorder.start()
-        """stop recording"""
-        print("ready press " + key + " to stop")
-        keyboard.wait(key, suppress=True)
+
+        """Stop recording"""
+        print(f"Press {record_key} to stop recording...")
+        keyboard.wait(record_key, suppress=True)
         recorder.stop()
-        """print recording"""
         print("Recording stopped.")
-        print("Transcription:", recorder.text())
-        """send to ollama"""
-        recorder.text() = get_llama_response(text)
+
+        """Print transcription"""
+        transcription = recorder.text()
+        print("Transcription:", transcription)
+
+        """Send to Llama"""
+        print("Sending to Llama...")
+        response = get_llama_response(transcription)
+        response_text = response.content if hasattr(response, 'content') else response
+        print("Response:", response_text)
+
+        """Filter out thoughts and speak"""
+        filtered_text = filter_thoughts(response_text)
+        speak_text(filtered_text)
+
+        """Check for exit key"""
+        print(f"Press {exit_key} to exit or {record_key} to record again...")
+        if keyboard.is_pressed(exit_key):
+            print("Exiting...")
+            break
 
 if __name__ == '__main__':
     main()
