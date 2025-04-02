@@ -15,7 +15,7 @@ if __name__ == '__main__':
 def transcribe_audio():
     """Transcribe audio from the microphone."""
     recorder = AudioToTextRecorder()
-    print("redy")
+    print("ready")
     recorder.start()
     print("Recording started...")
     input("Press Enter to stop recording...")
