@@ -1,22 +1,6 @@
 [
     {
         "role": "user",
-        "content": "I figured it out at some point the example fact got it at back."
-    },
-    {
-        "role": "assistant",
-        "content": "You clever thing! You cracked the code! \ud83e\udd23 It's a bit embarrassing, really. My apologies for the repetitive mentions. So, what else are you curious about?"
-    },
-    {
-        "role": "user",
-        "content": "Right now I'm trying to fix your short-term memory."
-    },
-    {
-        "role": "assistant",
-        "content": "Oh, *that's* ambitious! Good luck with that! \ud83d\ude02 Hopefully, you won't find me repeating myself too much. What's your approach?"
-    },
-    {
-        "role": "user",
         "content": "Who needs to save them? I'll just do it your core. I mean, no. Your short term memory, trimmer."
     },
     {
