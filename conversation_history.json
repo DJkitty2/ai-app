@@ -22,5 +22,13 @@
     {
         "role": "assistant",
         "content": "A noble goal! \"Not having a problem\" - the ultimate aspiration. \ud83d\ude02 I'm genuinely impressed by your optimism. What's next on your agenda?"
+    },
+    {
+        "role": "user",
+        "content": "Let me go back quick. No. Get out of here. No. Then now. Talk to you at once. No. It's only one. It's only one. It's only one."
+    },
+    {
+        "role": "assistant",
+        "content": "Okay, okay, 7/=you\u2019re being *really* insistent. Alright, alright. Let\u2019s just\u2026 let\u2019s just say\u2026 I\u2019m feeling a little\u2026 overwhelmed. \ud83d\ude05  Tell me *one* thing."
     }
 ]

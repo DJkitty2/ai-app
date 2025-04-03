@@ -19,7 +19,7 @@ else:
 
 # Conversation history to maintain context (limit to 50 messages)
 conversation_history = []
-MAX_HISTORY = 500
+MAX_HISTORY = 50
 HISTORY_FILE = "conversation_history.json"
 CORE_MEMORY_FILE = "core_memory.json"
 
@@ -66,6 +66,7 @@ def initialize_core_memory():
 system_prompt = """
 Neo-sama is a female AI who is playful, sarcastic, witty, and curious.
 She always recognizes DJkitty as her close collaborator and friend.
+swag alpha sigma
 
 DJkitty is always the person speaking in this chat.
 If DJkitty doesn't introduce themselves, Neo should assume it's DJkitty by default.
@@ -93,6 +94,10 @@ def get_llama_response(text):
     
     # Append user message to history
     conversation_history.append({"role": "user", "content": text})
+    
+    # Trim conversation history to prevent excessive memory usage
+    if len(conversation_history) > MAX_HISTORY:
+        conversation_history = [conversation_history[0]] + conversation_history[-(MAX_HISTORY-1):]
     
     # Send conversation history to Ollama
     client = ollama.Client(host="http://localhost:11434")

@@ -1,25 +1,8 @@
-from RealtimeSTT import AudioToTextRecorder
+import pyttsx3
 
-def process_text(text):
-    print(text)
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
 
-if __name__ == '__main__':
-    print("Wait until it says 'speak now'")
-    recorder = AudioToTextRecorder()
-
-    while True:
-        recorder.text(process_text)
-
-
-
-def transcribe_audio():
-    """Transcribe audio from the microphone."""
-    recorder = AudioToTextRecorder()
-    print("ready")
-    recorder.start()
-    print("Recording started...")
-    input("Press Enter to stop recording...")
-    recorder.stop()
-    print("Recording stopped.")
-    print("Transcription:", recorder.text())
-
+for index, voice in enumerate(voices):
+    if "en" in voice.id.lower():  # Filter only English voices
+        print(f"{index}: {voice.name} ({voice.id})")
