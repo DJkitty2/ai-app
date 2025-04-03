@@ -1,8 +1,9 @@
-import pyttsx3
+from RealtimeTTS import TextToAudioStream, SystemEngine
 
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
 
-for index, voice in enumerate(voices):
-    if "en" in voice.id.lower():  # Filter only English voices
-        print(f"{index}: {voice.name} ({voice.id})")
+def dummy_generator():
+    yield "This is a sentence. And here's another! Yet, "
+    yield "there's more. This ends now."
+
+
+TextToAudioStream(SystemEngine()).feed(dummy_generator()).play()
