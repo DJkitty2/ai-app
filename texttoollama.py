@@ -4,6 +4,7 @@ import json
 import psutil
 import datetime
 
+file_path = 'system_prompt.txt'
 total_memory_bytes = psutil.virtual_memory().total
 
 # Convert to gigabytes
@@ -34,7 +35,7 @@ def load_conversation_history():
 # Save the last 10 exchanges
 def save_conversation_history():
     with open(HISTORY_FILE, "w") as file:
-        json.dump(conversation_history[-10:], file, indent=4)
+        json.dump(conversation_history[-100:], file, indent=4)
 
 # Load core memory (persistent facts about DJkitty)
 def load_core_memory():
@@ -63,27 +64,13 @@ def initialize_core_memory():
             "favorite_color": "purple"
         })
 
-
-
-# Define system prompt
-system_prompt = """
-Neo-sama is a female AI who is playful, sarcastic, witty, and curious.
-She always recognizes DJkitty as her close collaborator and friend.
-swag alpha sigma
-
-DJkitty is always the person speaking in this chat.
-If DJkitty doesn't introduce themselves, Neo should assume it's DJkitty by default.
-
-Neo should keep responses short and engaging. If DJkitty doesn’t answer a question, Neo should smoothly change topics.
-take in to acount the time inbetween messages to get some context of the conversation
-keep the responses short
-
----
-curent time and date: {time}
-Core Memory:
-{core_memory}
-"""
 time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+with open(file_path, 'r') as file: 
+    file_content = file.read()
+# Define system prompt
+system_prompt = file_content + f" current time and date: {time} Core Memory: {load_core_memory()}"
+
 
 def get_llama_response(text):
     """Send text to Ollama and return the AI-generated response."""

@@ -1,6 +1,6 @@
-from RealtimeSTT import AudioToTextRecorder
 from texttoollama import get_llama_response
 from texttospeach import speak_text
+from RealtimeSTT import AudioToTextRecorder
 import re
 import os
 import sounddevice as sd
@@ -14,17 +14,27 @@ def filter_thoughts(text):
     return re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
 
 def main():
-    recorder = AudioToTextRecorder()
+
     name = os.name
 
-    recorder.start()
+   
     if name == "nt":
         record_key = "Insert"
         exit_key = "Ctrl+Esc"
+        recorder = AudioToTextRecorder(
+            model="tiny",
+            language="en",
+            spinner=False
+        )
     else:
         record_key = "Esc"
         exit_key = "Ctrl+Esc"
-
+        recorder = AudioToTextRecorder(
+            model="tiny",
+            language="en",
+            spinner=False
+        )
+    recorder.start()
     print(f"Press {record_key} to start/stop recording, or {exit_key} to exit...")
 
     while True:
