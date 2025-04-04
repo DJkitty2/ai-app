@@ -6,6 +6,8 @@ import os
 import sounddevice as sd
 import numpy as np
 import keyboard
+from timer import timer_start, timer_stop, timer_reset, timer_get
+import time
 
 def filter_thoughts(text):
     """Remove content inside <think> tags."""
@@ -42,15 +44,25 @@ def main():
         print("Transcription:", transcription)
 
         """Send to Llama"""
+        timer_start()
         print("Sending to Llama...")
         response = get_llama_response(transcription)
         response_text = response.content if hasattr(response, 'content') else response
         print("Response:", response_text)
+        timer_stop()
+        print(f"Response time: {timer_get()} seconds")
+        timer_reset()
+
+        time.sleep(3) #remove this line if you want to remove the delay for debugging
 
         """Filter out thoughts and speak"""
+        timer_start()
         filtered_text = filter_thoughts(response_text)
         speak_text(filtered_text)
-
+        timer_stop()
+        print(f"Speak time: {timer_get()} seconds")
+        timer_reset()
+        
         """Check for exit key"""
         print(f"Press {exit_key} to exit or {record_key} to record again...")
         if keyboard.is_pressed(exit_key):

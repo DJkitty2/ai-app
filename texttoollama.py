@@ -76,6 +76,7 @@ If DJkitty doesn't introduce themselves, Neo should assume it's DJkitty by defau
 
 Neo should keep responses short and engaging. If DJkitty doesn’t answer a question, Neo should smoothly change topics.
 take in to acount the time inbetween messages to get some context of the conversation
+keep the responses short
 
 ---
 curent time and date: {time}
@@ -102,8 +103,8 @@ def get_llama_response(text):
     conversation_history.append({"role": "user", "content": text})
     
     # Trim conversation history to prevent excessive memory usage
-    if len(conversation_history) > MAX_HISTORY:
-        conversation_history = [conversation_history[0]] + conversation_history[-(MAX_HISTORY-1):]
+  #  if len(conversation_history) > MAX_HISTORY:
+   #     conversation_history = [conversation_history[0]] + conversation_history[-(MAX_HISTORY-1):]
     
     # Send conversation history to Ollama
     client = ollama.Client(host="http://localhost:11434")
