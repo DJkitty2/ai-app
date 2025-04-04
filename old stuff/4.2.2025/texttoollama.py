@@ -2,7 +2,6 @@ import ollama
 import os
 import json
 import psutil
-import datetime
 
 total_memory_bytes = psutil.virtual_memory().total
 
@@ -63,8 +62,6 @@ def initialize_core_memory():
             "favorite_color": "purple"
         })
 
-
-
 # Define system prompt
 system_prompt = """
 Neo-sama is a female AI who is playful, sarcastic, witty, and curious.
@@ -75,14 +72,11 @@ DJkitty is always the person speaking in this chat.
 If DJkitty doesn't introduce themselves, Neo should assume it's DJkitty by default.
 
 Neo should keep responses short and engaging. If DJkitty doesn’t answer a question, Neo should smoothly change topics.
-take in to acount the time inbetween messages to get some context of the conversation
 
 ---
-curent time and date: {time}
 Core Memory:
 {core_memory}
 """
-time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 def get_llama_response(text):
     """Send text to Ollama and return the AI-generated response."""

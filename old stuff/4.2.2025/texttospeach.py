@@ -1,6 +1,5 @@
 from TTS.api import TTS
 import simpleaudio as sa
-import re
 
 def clean_text(text):
     """Remove non-ASCII characters from the input text."""
