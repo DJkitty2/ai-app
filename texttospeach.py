@@ -1,6 +1,12 @@
 from TTS.api import TTS
 import simpleaudio as sa
 import re
+import os
+
+if os.name == "nt":
+    device = "cuda"
+else:
+    device = "cpu"
 
 def clean_text(text):
     """Remove non-ASCII characters from the input text."""
@@ -8,7 +14,8 @@ def clean_text(text):
 
 def speak_text(text):
     text = clean_text(text)  # Clean text before passing to TTS
-    tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DCA", progress_bar=True, gpu=False)
+    tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC", progress_bar=True)
+    tts.to(device)
     tts.tts_to_file(text=text, file_path="output.wav")
 
     # Play the audio
@@ -17,5 +24,5 @@ def speak_text(text):
     play_obj.wait_done()
 
 if __name__ == "__main__":
-    sample_text = "this is a test mesige!"
+    sample_text = "simga sigma boy simga boy and i am steve"
     speak_text(sample_text)

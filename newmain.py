@@ -21,14 +21,17 @@ def main():
     if name == "nt":
         record_key = "Insert"
         exit_key = "Ctrl+Esc"
+        print("small")
         recorder = AudioToTextRecorder(
-            model="tiny",
+            model="small",
             language="en",
-            spinner=False
+            spinner= True,
+            device="cuda"
         )
     else:
         record_key = "Esc"
         exit_key = "Ctrl+Esc"
+        print("tiny")
         recorder = AudioToTextRecorder(
             model="tiny",
             language="en",
