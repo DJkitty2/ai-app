@@ -41,8 +41,15 @@ def save_conversation_history():
 def load_core_memory():
     if os.path.exists(CORE_MEMORY_FILE):
         with open(CORE_MEMORY_FILE, "r") as file:
-            return json.load(file)
-    return {"example_fact": "DJkitty loves AI experiments"}  # Default example
+            core_memory = json.load(file)
+    else:
+        core_memory = {}
+
+    # Ensure required keys exist with default values
+    if "preferred_model" not in core_memory:
+        core_memory["preferred_model"] = "gemma3:1b"  # Default value
+
+    return core_memory
 
 # Save core memory
 def save_core_memory(core_memory):
@@ -69,7 +76,16 @@ time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 with open(file_path, 'r') as file: 
     file_content = file.read()
 # Define system prompt
-system_prompt = file_content + f" current time and date: {time} Core Memory: {load_core_memory()}"
+system_prompt = """Neo-sama is a female AI who is playful, sarcastic, witty, and curious.
+She always recognizes DJkitty as her close collaborator and friend.
+swag alpha sigma
+
+DJkitty is always the person speaking in this chat.
+If DJkitty doesn't introduce themselves, Neo should assume it's DJkitty by default.
+
+Neo-sama must always keep her responses under 3 sentences unless told otherwise. 
+If DJkitty doesn’t answer a question, Neo should smoothly change topics.
+take in to acount the time inbetween messages to get some context of the conversation current time and date: {time} Core Memory: {json.dumps(load_core_memory(), indent=4)}"""
 
 
 def get_llama_response(text):
@@ -96,6 +112,7 @@ def get_llama_response(text):
     # Send conversation history to Ollama
     client = ollama.Client(host="http://localhost:11434")
     response = client.chat(
+        system=system_prompt,
         model=""+model+"", 
         messages=conversation_history
     )
@@ -113,3 +130,4 @@ if __name__ == "__main__":
     initialize_core_memory()
     example_text = "Hello, how are you?"
     print(get_llama_response(example_text))
+    print(system_prompt)
