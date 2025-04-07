@@ -6,7 +6,7 @@ import os
 import sounddevice as sd
 import numpy as np
 import keyboard
-from timer import timer_start, timer_stop, timer_reset, timer_get
+from timer2 import timer_start, timer_stop, timer_reset, timer_get
 import time
 
 def filter_thoughts(text):
@@ -35,7 +35,7 @@ def main():
         recorder = AudioToTextRecorder(
             model="tiny",
             language="en",
-            spinner=False
+            spinner=True
         )
     recorder.start()
     print(f"Press {record_key} to start/stop recording, or {exit_key} to exit...")

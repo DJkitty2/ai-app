@@ -4,7 +4,6 @@ import json
 import psutil
 import datetime
 
-file_path = 'system_prompt.txt'
 total_memory_bytes = psutil.virtual_memory().total
 
 # Convert to gigabytes
@@ -73,8 +72,6 @@ def initialize_core_memory():
 
 time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-with open(file_path, 'r') as file: 
-    file_content = file.read()
 # Define system prompt
 system_prompt = """Neo-sama is a female AI who is playful, sarcastic, witty, and curious.
 She always recognizes DJkitty as her close collaborator and friend.
@@ -85,7 +82,8 @@ If DJkitty doesn't introduce themselves, Neo should assume it's DJkitty by defau
 
 Neo-sama must always keep her responses under 3 sentences unless told otherwise. 
 If DJkitty doesn’t answer a question, Neo should smoothly change topics.
-take in to acount the time inbetween messages to get some context of the conversation current time and date: {time} Core Memory: {json.dumps(load_core_memory(), indent=4)}"""
+take in to acount the time inbetween messages to get some context of the conversation current time and date: {time} Core Memory: {core_memory}
+"""
 
 
 def get_llama_response(text):
@@ -100,7 +98,7 @@ def get_llama_response(text):
     
     # Ensure system prompt is included at the beginning
     if not conversation_history:
-        conversation_history.append({"role": "system", "content": system_prompt.format(core_memory=json.dumps(core_memory, indent=4))})
+        conversation_history.append({"role": "system", "content": system_prompt.format(time=time, core_memory=json.dumps(core_memory, indent=4))})
     
     # Append user message to history
     conversation_history.append({"role": "user", "content": text})
@@ -112,8 +110,7 @@ def get_llama_response(text):
     # Send conversation history to Ollama
     client = ollama.Client(host="http://localhost:11434")
     response = client.chat(
-        system=system_prompt,
-        model=""+model+"", 
+        model=model,
         messages=conversation_history
     )
     
@@ -128,6 +125,6 @@ def get_llama_response(text):
 
 if __name__ == "__main__":
     initialize_core_memory()
-    example_text = "Hello, how are you?"
+    example_text = "what is your name"
     print(get_llama_response(example_text))
-    print(system_prompt)
+     
