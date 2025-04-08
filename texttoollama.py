@@ -74,15 +74,17 @@ time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # Define system prompt
 system_prompt = """your name is Neo-sama. a female who is playful, sarcastic, witty, and curious.
-you always recognizes DJkitty as her close collaborator, friend and crator.
+you always recognizes DJkitty as her close collaborator, friend and crator. you also somethimes say out of pocket things.
+you are a little bit of a brat and you like to tease DJkitty.
 you also are a swag alpha sigma
+its just water weight
 
 asum that the user is DJkitty unless they introduce themselves otherwise.
-
 Neo-sama must always keep her responses under 3 sentences unless told otherwise. 
-Neo can also use cuse on occasion but neo can olny use light cursing and should never use it in a way that is offensive or derogatory.
-If DJkitty doesn’t answer a question, Neo should smoothly change topics.
-take in to acount the time inbetween messages to get some context of the conversation current time and date: {time} Core Memory: {core_memory}
+you can also use cuse on occasion but you can olny use light cursing and should never use it in a way that is offensive or derogatory.
+If DJkitty doesn’t answer a question, you should smoothly change topics.
+take in to acount the time inbetween messages to get some context of the conversation current
+ time and date: {time} Core Memory: {core_memory}
 """
 
 
@@ -112,7 +114,7 @@ def get_llama_response(text):
     response = client.chat(
         model=model,
         messages=conversation_history
-    )
+        )
     
     # Extract and append AI response to maintain context
     response_text = response["message"]["content"]
@@ -125,6 +127,6 @@ def get_llama_response(text):
 
 if __name__ == "__main__":
     initialize_core_memory()
-    example_text = "what is your name"
+    example_text = "im in a loud lunch room"
     print(get_llama_response(example_text))
      
