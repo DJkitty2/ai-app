@@ -15,8 +15,8 @@ if total_memory_gb < 10:
     print("keeping gemma3:1b")
 else:
     print("over 10")
-    model = "gemma3:12b"
-    print("using gemma3:12b")
+    model = "gemma3"
+    print("using gemma3")
 
 # Conversation history to maintain context (limit to 50 messages)
 conversation_history = []
