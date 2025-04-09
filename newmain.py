@@ -13,6 +13,9 @@ def filter_thoughts(text):
     """Remove content inside <think> tags."""
     return re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
 
+def fun_speed():
+    return(speed)
+
 def main():
 
     name = os.name
@@ -41,6 +44,11 @@ def main():
     print(f"Press {record_key} to start/stop recording, or {exit_key} to exit...")
 
     while True:
+
+        """define var"""
+        global speed
+        speed=10
+
         """Start recording"""
         keyboard.wait(record_key, suppress=True)
         print("Recording started...")
