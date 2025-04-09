@@ -2,6 +2,7 @@ from TTS.api import TTS
 import simpleaudio as sa
 import re
 import os
+from newmain import fun_speed
 
 if os.name == "nt":
     device = "cuda"
@@ -13,17 +14,23 @@ def clean_text(text):
     return re.sub(r'[^\x00-\x7F]+', '', text)  # Keeps only standard ASCII characters
 
 def speak_text(text):
+    speak_speed=fun_speed()
+    print(speak_speed)
     text = clean_text(text)  # Clean text before passing to TTS
     tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC", progress_bar=True)
     tts.to(device)
-    tts.tts_to_file(text=text, file_path="output.wav")
-
+    tts.tts_to_file(
+        text=text,
+        speed=speak_speed, 
+        file_path="output.wav"
+        )
+    
     # Play the audio
     wave_obj = sa.WaveObject.from_wave_file("output.wav")
     play_obj = wave_obj.play()
     play_obj.wait_done()
 
 if __name__ == "__main__":
-    sample_text = "simga sigma boy simga boy"
+    sample_text = "i am steve"
     speak_text(sample_text)
  
