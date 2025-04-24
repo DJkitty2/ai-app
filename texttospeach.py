@@ -27,6 +27,6 @@ def speak_text(text):
     play_obj.wait_done()
 
 if __name__ == "__main__":
-    sample_text = "i am steve"
+    sample_text = "simga sigma boy sigma boy"
     speak_text(sample_text)
  
