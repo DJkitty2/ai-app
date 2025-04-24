@@ -6,7 +6,6 @@ on mac you need to run with sudo
 
 example audio of a suroke
 <audio controls>
-  <source src="suroke.wav" type="audio/wav">
-  Your browser does not support the audio element. 
+  <source src="suroke.wav" type="audio/wav"> 
   <a href="suroke.wav">Download audio</a>.
 </audio>
