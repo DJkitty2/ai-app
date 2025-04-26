@@ -1,6 +1,7 @@
 from texttoollama import get_llama_response
 from texttospeach import speak_text
 from RealtimeSTT import AudioToTextRecorder
+from vizulizer import chaos_shape_visualizer
 import re
 import os
 import sounddevice as sd
@@ -67,6 +68,7 @@ def main():
         timer_start()
         filtered_text = filter_thoughts(response_text)
         speak_text(filtered_text)
+        chaos_shape_visualizer()
         timer_stop()
         print(f"Speak time: {timer_get()} seconds")
         timer_reset()
