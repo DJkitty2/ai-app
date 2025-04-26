@@ -128,6 +128,6 @@ def get_llama_response(text):
 
 if __name__ == "__main__":
     initialize_core_memory()
-    example_text = """we are not working on the butterfly right now"""
+    example_text = """why do whales have pelvic bones in 5 to 6 sentences"""
     print(get_llama_response(example_text))
      
