@@ -10,7 +10,7 @@ from pathlib import Path
 
 CONFIG = {
     "file_path": "output.wav",
-    "num_points": 64,
+    "num_points": 4,
     "radius": 2.0,
     "amplitude_scale": 100,
     "min_amplitude": 0.005,  # helps ignore AI artifacts
@@ -28,7 +28,7 @@ def chaos_shape_visualizer():
 
     app = pg.mkQApp("Chaos Shape Visualizer")
     win = pg.GraphicsLayoutWidget(show=True)
-    win.setWindowTitle("Chaos Shape")
+    win.setWindowTitle("vizulizer")
     win.setBackground('k')
     plot = win.addPlot()
     plot.setAspectLocked(True)
