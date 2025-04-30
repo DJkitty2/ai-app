@@ -10,7 +10,7 @@ from pathlib import Path
 
 # Configuration
 CONFIG = {
-    "file_path": "output.wav",
+    "file_path": "suroke.wav",
     "num_points": 500,
     "radius": 2.0,
     "amplitude_scale": 80,
@@ -28,9 +28,9 @@ def chaos_shape_visualizer():
     pos = [0]  # Mutable position
 
     # Set up window
-    app = pg.mkQApp("Chaos Shape Visualizer")
+    app = pg.mkQApp("vizulizer")
     win = pg.GraphicsLayoutWidget(show=True)
-    win.setWindowTitle("Chaos Shape Visualizer")
+    win.setWindowTitle("vizulizer")
     win.setBackground('#0b0c1e')  # Deep navy background
 
     plot = win.addPlot()
