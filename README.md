@@ -14,6 +14,8 @@ example audio of a suroke
   <a href="suroke.wav">Download audio</a>
 </audio>
 
+we have discord bot suport you need to add your token to .env.example and rename it to .env and run discord_bot.py
+
 ## License
 This project is licensed under the [Apache 2.0 License](LICENSE).
 
