@@ -64,6 +64,14 @@ def add_to_core_memory(key, value):
     core_memory[key] = value
     save_core_memory(core_memory)
 
+def clear_memorys():
+    if os.path.exists(HISTORY_FILE):
+        with open(HISTORY_FILE, "w") as file:
+            json.dump([], file)
+            print("cleared")
+        conversation_history.clear()
+    
+    
 # Ensure core memory file exists with example format
 def initialize_core_memory():
     if not os.path.exists(CORE_MEMORY_FILE):

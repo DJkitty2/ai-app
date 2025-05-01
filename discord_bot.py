@@ -1,6 +1,7 @@
 from typing import Final
-import texttoollama
+from texttoollama import clear_memorys
 import os
+from discord.ext import commands
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
 from responses import get_response
@@ -12,7 +13,7 @@ TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
 # STEP 1: BOT SETUP
 intents: Intents = Intents.default()
 intents.message_content = True  # NOQA
-client: Client = Client(intents=intents)
+client = commands.Bot(command_prefix='!', intents=intents)
 
 
 # STEP 2: MESSAGE FUNCTIONALITY
@@ -39,6 +40,10 @@ async def send_message(message: Message, user_message: str) -> None:
 async def on_ready() -> None:
     print(f'{client.user} is now running!')
 
+@client.command()
+async def clear(ctx) -> None:
+    clear_memorys()
+    await ctx.send('done cleared!')
 
 # STEP 4: HANDLING INCOMING MESSAGES
 @client.event
@@ -46,14 +51,15 @@ async def on_message(message: Message) -> None:
     if message.author == client.user:
         return
 
+    await client.process_commands(message) 
+
     username: str = str(message.author)
     user_message: str = message.content
     channel: str = str(message.channel)
 
     print(f'[{channel}] {username}: "{user_message}"')
     await send_message(message, user_message)
-
-
+    
 # STEP 5: MAIN ENTRY POINT
 def main() -> None:
     client.run(token=TOKEN)
