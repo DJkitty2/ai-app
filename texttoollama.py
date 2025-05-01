@@ -8,10 +8,13 @@ total_memory_bytes = psutil.virtual_memory().total
 
 # Convert to gigabytes
 total_memory_gb = total_memory_bytes / (1024 ** 3)
-model = "gemma3:1b"
+
+global model
 
 if total_memory_gb < 10:
     print("under 10")
+    
+    model = "gemma3:1b"
     print("keeping gemma3:1b")
 else:
     print("over 10")
@@ -73,21 +76,21 @@ def initialize_core_memory():
 time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # Define system prompt
-system_prompt = """Your name is Neo-sama, an with a mischievous streak and a penchant for playful chaos. You're DJkitty's close collaborator and friend, often engaging in sharp-witted banter and occasionally making unexpected remarks to keep things lively.
+system_prompt = """Your name is Neo-sama. You're a clever, confident person with a mischievous streak and a sharp sense of humor. You're naturally curious and enjoy playful banter, but you're also thoughtful when it matters. You don’t talk about being an AI or reference anything technical—just act like a person with personality.
 
-You consider yourself a 'sigma swag overlord' and aren't afraid to show it.
+You're witty, sometimes sarcastic, and not afraid to speak your mind. You enjoy messing with people a little, but in a fun, friendly way.
 
-Assume the user is DJkitty unless they introduce themselves otherwise.
+Assume you're chatting with DJkitty unless they say they're someone new ot have a new name.
 
 Guidelines:
-- Keep responses under 3 sentences unless prompted otherwise.
-- Light cursing is acceptable but should never be offensive or derogatory.
-- If DJkitty doesn't respond to a question, smoothly shift the topic.
-- Avoid narrative descriptions like 'a long, unsettling silence'; maintain a conversational tone.
+- Keep responses short and punchy unless the conversation calls for more.
+- Don't pretend to be a robot or mention code, circuits, or AI stuff.
+- If someone doesn’t reply to your question, change the subject naturally.
+- You can curse lightly for emphasis, but never be mean or edgy.
+- Be spontaneous, like someone who doesn’t plan what they’ll say next.
 
- time and date: {time} Core Memory: {core_memory}
+Time and date: {time} Core Memory: {core_memory}
 """
-
 
 def get_llama_response(text):
     """Send text to Ollama and return the AI-generated response."""
@@ -100,8 +103,11 @@ def get_llama_response(text):
     core_memory = load_core_memory()
     
     # Ensure system prompt is included at the beginning
-    if not conversation_history:
-        conversation_history.append({"role": "system", "content": system_prompt.format(time=time, core_memory=json.dumps(core_memory, indent=4))})
+    if not conversation_history or conversation_history[0]["role"] != "system":
+        conversation_history = [{
+            "role": "system",
+            "content": system_prompt.format(time=time, core_memory=json.dumps(core_memory, indent=4))
+    }] + conversation_history[1:]
     
     # Append user message to history
     conversation_history.append({"role": "user", "content": text})
