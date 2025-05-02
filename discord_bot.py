@@ -5,6 +5,11 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
 from responses import get_response
+import re
+
+def filter_thoughts(text):
+    """Remove content inside <think> tags."""
+    return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
 
 # STEP 0: LOAD OUR TOKEN FROM SOMEWHERE SAFE
 load_dotenv()
@@ -16,7 +21,6 @@ intents.message_content = True  # NOQA
 client = commands.Bot(command_prefix='!', intents=intents)
 
 
-# STEP 2: MESSAGE FUNCTIONALITY
 async def send_message(message: Message, user_message: str) -> None:
     if not user_message:
         print('(Message was empty because intents were not enabled probably)')
@@ -29,10 +33,17 @@ async def send_message(message: Message, user_message: str) -> None:
     channel: str = str(message.channel)
     
     try:
-        response: str = get_response(user_message, username, channel)
-        await message.author.send(response) if is_private else await message.channel.send(response)
+        if is_private:
+            # No typing indicator for DMs (optional)
+            response: str = get_response(user_message, username, channel)
+            await message.author.send(response)
+        else:
+            async with message.channel.typing():
+                response: str = get_response(user_message, username, channel)
+                await message.channel.send(response)
     except Exception as e:
         print(e)
+
 
 
 # STEP 3: HANDLING THE STARTUP FOR OUR BOT
