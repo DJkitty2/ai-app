@@ -52,7 +52,7 @@ async def on_message(message: Message) -> None:
         return
 
     await client.process_commands(message) 
-
+    
     username: str = str(message.author)
     user_message: str = message.content
     channel: str = str(message.channel)
@@ -63,6 +63,7 @@ async def on_message(message: Message) -> None:
 # STEP 5: MAIN ENTRY POINT
 def main() -> None:
     client.run(token=TOKEN)
+    
 
 
 if __name__ == '__main__':

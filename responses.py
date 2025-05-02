@@ -1,9 +1,7 @@
 from texttoollama import get_llama_response
 
 def get_response(username: str, user_input: str, channel: str) -> str: 
-    lowered: str = user_input.lower()
-    print(lowered)
-    
+    lowered: str = user_input.lower()    
     try:
         response = get_llama_response(f"{username} said {user_input} in {channel} on discord")
         return response
