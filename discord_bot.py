@@ -1,6 +1,7 @@
 from typing import Final
 from texttoollama import clear_memorys
 import os
+import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
@@ -14,12 +15,12 @@ def filter_thoughts(text):
 # STEP 0: LOAD OUR TOKEN FROM SOMEWHERE SAFE
 load_dotenv()
 TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
+CHANNEL: Final[int] = int(os.getenv('DISCORD_CHANNEL'))
 
 # STEP 1: BOT SETUP
 intents: Intents = Intents.default()
 intents.message_content = True  # NOQA
 client = commands.Bot(command_prefix='!', intents=intents)
-
 
 async def send_message(message: Message, user_message: str) -> None:
     if not user_message:
@@ -33,14 +34,17 @@ async def send_message(message: Message, user_message: str) -> None:
     channel: str = str(message.channel)
     
     try:
-        if is_private:
-            # No typing indicator for DMs (optional)
-            response: str = get_response(user_message, username, channel)
-            await message.author.send(response)
+        if message.channel.id != CHANNEL and not isinstance(message.channel, discord.DMChannel):
+            return
         else:
-            async with message.channel.typing():
+            if is_private:
+                # No typing indicator for DMs (optional)
                 response: str = get_response(user_message, username, channel)
-                await message.channel.send(response)
+                await message.author.send(response)
+            else:
+                async with message.channel.typing():
+                    response: str = get_response(user_message, username, channel)
+                    await message.channel.send(response)
     except Exception as e:
         print(e)
 
@@ -75,9 +79,34 @@ async def on_message(message: Message) -> None:
 def main() -> None:
     client.run(token=TOKEN)
     
+    
+@client.command(pass_context=True)
+async def join(ctx):
+    voice_channel = ctx.author.voice.channel 
+    if voice_channel is None:
+        await ctx.send("please join a voice channel first")
+        return
+    await play_audio(voice_channel, "Papers, Please Theme Song - dukope1.mp3")
+    
+async def play_audio(voice_channel, audio):
+    vc = await voice_channel.connect()
+    vc.play(discord.FFmpegPCMAudio(audio, executable="B:/ffmpeg/bin/ffmpeg.exe"))
+    while vc.is_playing():
+        await asyncio.sleep(1)  
+    await vc.disconnect()
+
+
+        
+@client.command(pass_context=True)
+async def leave(ctx):
+    if (ctx.voice_client):
+        await ctx.voice_client.disconnect()
+        
+    else:
+        await ctx.send("I am not connected to a voice channel.")
 
 
 if __name__ == '__main__':
-    main()
-
+    import asyncio
+    client.run(token=TOKEN)
 
