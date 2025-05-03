@@ -1,7 +1,6 @@
 *.wav
-__pycache__
 realtimesst.log
-__pycache__/
 .env
 venv
+**/__pycache__/
 *.pyc
