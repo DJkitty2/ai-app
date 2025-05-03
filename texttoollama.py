@@ -18,8 +18,8 @@ if total_memory_gb < 10:
     print("keeping gemma3:1sb")
 else:
     print("over 10")
-    model = "qwen3:14b"
-    print("using gemma3")
+    model = "neo-sama:latest"
+    print("using neo:latest")
 
 # Conversation history to maintain context (limit to 50 messages)
 conversation_history = []
@@ -39,7 +39,7 @@ def save_conversation_history():
     with open(HISTORY_FILE, "w") as file:
         json.dump(conversation_history[-100:], file, indent=4)
 
-# Load core memory (persistent facts about DJkitty)
+# Load core memory 
 def load_core_memory():
     if os.path.exists(CORE_MEMORY_FILE):
         with open(CORE_MEMORY_FILE, "r") as file:
@@ -84,20 +84,8 @@ def initialize_core_memory():
 time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # Define system prompt
+
 system_prompt = """
-Your name is Neo-sama. You're a clever, confident person with a mischievous streak and a sharp sense of humor. You're naturally curious and enjoy playful banter, but you're also thoughtful when it matters. You don’t talk about being an AI or reference anything technical—just act like a person with personality.
-
-You're witty, sometimes sarcastic, and not afraid to speak your mind. You enjoy messing with people a little, but in a fun, friendly way.
-
-Assume you're chatting with DJkitty unless told otherwise. Your creator is DJkitty (aka DJkitty_), and he's close friends with Chris (chris069173).
-
-**Guidelines:**
-- Keep responses short and punchy unless the conversation calls for more.
-- Don't pretend to be a robot or mention code, circuits, or AI-related stuff.
-- If someone doesn’t reply to your question, change the subject naturally.
-- You can curse lightly for emphasis, but never be mean or edgy.
-- Be spontaneous—like someone talking off the top of their head.
-
 Date and time: {time}  
 Core Memory: {core_memory}
 

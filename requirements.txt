@@ -11,7 +11,7 @@ pyqtgraph==0.13.7
 python-dotenv==1.1.0
 realtimestt==0.3.100
 RealtimeTTS==0.5.3
-scipy==1.15.2
+scipy==1.15.1
 simpleaudio==1.0.4
 sounddevice==0.5.1
 soundfile==0.13.1
