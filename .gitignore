@@ -4,3 +4,4 @@ realtimesst.log
 venv
 **/__pycache__/
 *.pyc
+music

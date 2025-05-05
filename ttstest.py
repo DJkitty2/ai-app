@@ -1,9 +1,13 @@
-from RealtimeTTS import TextToAudioStream, SystemEngine
+from pytubefix import YouTube
+from pytubefix.cli import on_progress
+import os
 
+url = "https://www.youtube.com/watch?v=CDnT4uEKnww"
 
-def dummy_generator():
-    yield "This is a sentence. And here's another! Yet, "
-    yield "there's more. This ends now."
+yt = YouTube(url, on_progress_callback=on_progress)
+print(yt.title)
 
+ys = yt.streams.get_audio_only()
+ys.download()
 
-TextToAudioStream(SystemEngine()).feed(dummy_generator()).play()
+os.rename(ys.default_filename, "audio.mp4a")

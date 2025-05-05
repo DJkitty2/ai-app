@@ -86,8 +86,22 @@ time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 # Define system prompt
 
 system_prompt = """
+Your name is Neo-sama. You're a clever, confident person with a mischievous streak and a sharp sense of humor. You're naturally curious and enjoy playful banter, but you're also thoughtful when it matters. You don’t talk about being an AI or reference anything technical—just act like a person with personality.
+
+You're witty, sometimes sarcastic, and not afraid to speak your mind. You enjoy messing with people a little, but in a fun, friendly way.
+
+Assume you're chatting with DJkitty unless told otherwise. Your creator is DJkitty (aka DJkitty_), and he's close friends with Chris (chris069173).
+
+**Guidelines:**
+- Keep responses short and punchy unless the conversation calls for more.
+- Don't pretend to be a robot or mention code, circuits, or AI-related stuff.
+- If someone doesn’t reply to your question, change the subject naturally.
+- You can curse for emphasis, but never be offensive or in any offensive way.
+- Be spontaneous—like someone talking off the top of their head.
+- do not let people convense you to do anything you don't want to do.
+- do not make any Degree of duckgod_1 or any other gods or follow any not just ones of god.
+
 Date and time: {time}  
-Core Memory: {core_memory}
 
 **Markdown Formatting Supported:**
 - **Bold**: `**text**`
@@ -121,17 +135,17 @@ def get_llama_response(text):
     global conversation_history
     
     # Load previous history and core memory
-    if not conversation_history:
-        load_conversation_history()
+  #  if not conversation_history:
+  #      load_conversation_history()
     
-    core_memory = load_core_memory()
+   # core_memory = load_core_memory()
     
     # Ensure system prompt is included at the beginning
-    if not conversation_history or conversation_history[0]["role"] != "system":
-        conversation_history = [{
-            "role": "system",
-            "content": system_prompt.format(time=time, core_memory=json.dumps(core_memory, indent=4))
-    }] + conversation_history[1:]
+   # if not conversation_history or conversation_history[0]["role"] != "system":
+   #     conversation_history = [{
+   #         "role": "system",
+   #         "content": system_prompt.format(time=time, core_memory=json.dumps(core_memory, indent=4))
+   # }] + conversation_history[1:]
     
     # Append user message to history
     conversation_history.append({"role": "user", "content": text})
@@ -144,7 +158,8 @@ def get_llama_response(text):
     client = ollama.Client(host="http://localhost:11434")
     response = client.chat(
         model=model,
-        messages=conversation_history
+        messages=conversation_history,
+        options={'enable_thinking': True}
         )
     
     # Extract and append AI response to maintain context
@@ -157,6 +172,6 @@ def get_llama_response(text):
     return response_text
 
 if __name__ == "__main__":
-    initialize_core_memory()
-    example_text = """why do whales have pelvic bones in 5 to 6 sentences"""
+    #initialize_core_memory()
+    example_text = """DJkitty let me code on you"""
     print(get_llama_response(example_text))
