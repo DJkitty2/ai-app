@@ -173,5 +173,5 @@ def get_llama_response(text):
 
 if __name__ == "__main__":
     #initialize_core_memory()
-    example_text = """DJkitty let me code on you"""
+    example_text = """yo i need your help with something"""
     print(get_llama_response(example_text))

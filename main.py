@@ -3,17 +3,16 @@ from texttospeach import speak_text
 from RealtimeSTT import AudioToTextRecorder
 import re
 import os
-import sounddevice as sd
-import numpy as np
 import keyboard
 from timer2 import timer_start, timer_stop, timer_reset, timer_get
 import time
 
 
+
+
 def filter_thoughts(text):
     """Remove content inside <think> tags."""
     return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
-
 
 def main():
 
@@ -24,7 +23,7 @@ def main():
         exit_key = "Ctrl+Esc"
         print("small")
         recorder = AudioToTextRecorder(
-            model="small", language="en", spinner=True, device="cuda"
+             model="small", language="en", spinner=True, device="cuda"
         )
     else:
         record_key = "Esc"
@@ -80,3 +79,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    app.run(debug=True)

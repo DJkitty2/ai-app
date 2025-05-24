@@ -2,9 +2,10 @@ from TTS.api import TTS
 import simpleaudio as sa
 import re
 import os
+import torch
 
 if os.name == "nt":
-    device = "cuda"
+    device = "cuda" if torch.cuda.is_available() else "cpu"
 else:
     device = "cpu"
 
@@ -27,6 +28,7 @@ def speak_text(text):
     play_obj.wait_done()
 
 if __name__ == "__main__":
-    sample_text = "simga sigma boy sigma boy"
+    sample_text = """good
+"""
     speak_text(sample_text)
  
