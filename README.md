@@ -17,4 +17,4 @@ example audio of a suroke
 we have discord bot suport you need to add your token to .env.example and rename it to .env and run discord_bot.py
 
 ## License
-© 2025 by DJkitty is licensed under Creative Commons Attribution-NonCommercial 4.0 International. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/4.0/
+Neo-sama  © 2025 by DJkitty &amp; chris is licensed under CC BY-NC-ND 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/4.0/
