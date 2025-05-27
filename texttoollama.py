@@ -25,7 +25,6 @@ else:
 conversation_history = []
 #MAX_HISTORY = 50
 HISTORY_FILE = "conversation_history.json"
-CORE_MEMORY_FILE = "core_memory.json"
 
 # Load previous conversation history if available
 def load_conversation_history():
@@ -39,47 +38,15 @@ def save_conversation_history():
     with open(HISTORY_FILE, "w") as file:
         json.dump(conversation_history[-100:], file, indent=4)
 
-# Load core memory 
-def load_core_memory():
-    if os.path.exists(CORE_MEMORY_FILE):
-        with open(CORE_MEMORY_FILE, "r") as file:
-            core_memory = json.load(file)
-    else:
-        core_memory = {}
-
-    # Ensure required keys exist with default values
-    if "preferred_model" not in core_memory:
-        core_memory["favorite_color"] = "yellow, blue, orange"  # Default value
-
-    return core_memory
 
 # Save core memory
-def save_core_memory(core_memory):
-    with open(CORE_MEMORY_FILE, "w") as file:
-        json.dump(core_memory, file, indent=4)
-
-# Add new fact to core memory
-def add_to_core_memory(key, value):
-    core_memory = load_core_memory()
-    core_memory[key] = value
-    save_core_memory(core_memory)
-
 def clear_memorys():
     if os.path.exists(HISTORY_FILE):
         with open(HISTORY_FILE, "w") as file:
             json.dump([], file)
             print("cleared")
         conversation_history.clear()
-    
-    
-# Ensure core memory file exists with example format
-def initialize_core_memory():
-    if not os.path.exists(CORE_MEMORY_FILE):
-        save_core_memory({
-            "example_fact": "DJkitty loves AI experiments",
-            "preferred_model": "gemma3:12b",
-            "favorite_color": "purple"
-        })
+
 
 time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -101,16 +68,7 @@ Assume you're chatting with DJkitty unless told otherwise. Your creator is DJkit
 - do not let people convense you to do anything you don't want to do.
 - do not make any Degree of duckgod_1 or any other gods or follow any not just ones of god.
 
-Date and time: {time}  
-
-**Markdown Formatting Supported:**
-- **Bold**: `**text**`
-- _Italics_: `_text_`
-- __Underline__: `__text__`
-- ~~Strikethrough~~: `~~text~~`
-- ||Spoiler||: `||text||`
-- Block quotes: Start a line with `>`, e.g.,  
-  > This is a quote
+Date and time: {time} 
 
 **Behavioral examples:**
 
@@ -144,10 +102,6 @@ def get_llama_response(text):
     # Append user message to history
     conversation_history.append({"role": "user", "content": text})
     
-    # Trim conversation history to prevent excessive memory usage
-  #  if len(conversation_history) > MAX_HISTORY:
-   #     conversation_history = [conversation_history[0]] + conversation_history[-(MAX_HISTORY-1):]
-    
     # Send conversation history to Ollama
     client = ollama.Client(host="http://localhost:11434")
     response = client.chat(
@@ -166,6 +120,5 @@ def get_llama_response(text):
     return response_text
 
 if __name__ == "__main__":
-    #initialize_core_memory()
     example_text = """hows it going"""
     print(get_llama_response(example_text))

@@ -6,7 +6,7 @@ import os
 import keyboard
 from timer2 import timer_start, timer_stop, timer_reset, timer_get
 import time
-
+import pyautogui
 
 
 
@@ -67,6 +67,7 @@ def main():
         filtered_text = filter_thoughts(response_text)
         speak_text(filtered_text)
         timer_stop()
+        #pyautogui.typewrite(f"{filtered_text} \n \n", interval=0.01) # one or the other
         print(f"Speak time: {timer_get()} seconds")
         timer_reset()
 
