@@ -14,8 +14,8 @@ global model
 if total_memory_gb < 10:
     print("under 10")
     
-    model = "Qwen2.5:3B"
-    print("keeping gemma3:1sb")
+    model = "gemma3:1b"
+    print("keeping gemma3:1b")
 else:
     print("over 10")
     model = "neo-sama:latest"
@@ -135,17 +135,11 @@ def get_llama_response(text):
     global conversation_history
     
     # Load previous history and core memory
-  #  if not conversation_history:
-  #      load_conversation_history()
-    
-   # core_memory = load_core_memory()
-    
-    # Ensure system prompt is included at the beginning
-   # if not conversation_history or conversation_history[0]["role"] != "system":
-   #     conversation_history = [{
-   #         "role": "system",
-   #         "content": system_prompt.format(time=time, core_memory=json.dumps(core_memory, indent=4))
-   # }] + conversation_history[1:]
+    if not conversation_history or conversation_history[0]["role"] != "system":
+        conversation_history.insert(0, {
+            "role": "system",
+            "content": system_prompt.format(time=time)
+        })
     
     # Append user message to history
     conversation_history.append({"role": "user", "content": text})
@@ -173,5 +167,5 @@ def get_llama_response(text):
 
 if __name__ == "__main__":
     #initialize_core_memory()
-    example_text = """yo i need your help with something"""
+    example_text = """hows it going"""
     print(get_llama_response(example_text))
