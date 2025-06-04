@@ -28,6 +28,6 @@ def speak_text(text):
     play_obj.wait_done()
 
 if __name__ == "__main__":
-    sample_text = """hello, this is a test of the text-to-speech system. Let's see how it handles this text!"""
+    sample_text = """why dont you tell my your idea for be em be"""
     speak_text(sample_text)
  

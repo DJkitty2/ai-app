@@ -5,7 +5,6 @@ import re
 import os
 import keyboard
 from timer2 import timer_start, timer_stop, timer_reset, timer_get
-import time
 import pyautogui
 
 def filter_thoughts(text):
