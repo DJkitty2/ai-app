@@ -8,8 +8,6 @@ from timer2 import timer_start, timer_stop, timer_reset, timer_get
 import time
 import pyautogui
 
-
-
 def filter_thoughts(text):
     """Remove content inside <think> tags."""
     return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
@@ -60,8 +58,8 @@ def main():
         print(f"Response time: {timer_get()} seconds")
         timer_reset()
 
-        time.sleep(3)  # remove this line if you want to remove the delay for debugging
-
+        #time.sleep(3)
+        
         """Filter out thoughts and speak"""
         timer_start()
         filtered_text = filter_thoughts(response_text)

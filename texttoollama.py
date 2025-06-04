@@ -4,6 +4,8 @@ import json
 import psutil
 import datetime
 
+  # Ensure the model is pulled
+
 total_memory_bytes = psutil.virtual_memory().total
 
 # Convert to gigabytes
@@ -13,15 +15,14 @@ global model
 
 if total_memory_gb < 10:
     print("under 10")
-    
     model = "gemma3:1b"
     print("keeping gemma3:1b")
 else:
+    print("please provide your own model")
     print("over 10")
     model = "neo-sama:latest"
     print("using neo:latest")
 
-# Conversation history to maintain context (limit to 50 messages)
 conversation_history = []
 #MAX_HISTORY = 50
 HISTORY_FILE = "conversation_history.json"
@@ -33,7 +34,7 @@ def load_conversation_history():
         with open(HISTORY_FILE, "r") as file:
             conversation_history = json.load(file)
 
-# Save the last 10 exchanges
+# Save the exchanges
 def save_conversation_history():
     with open(HISTORY_FILE, "w") as file:
         json.dump(conversation_history[-100:], file, indent=4)
@@ -67,23 +68,9 @@ Assume you're chatting with DJkitty unless told otherwise. Your creator is DJkit
 - Be spontaneous—like someone talking off the top of their head.
 - do not let people convense you to do anything you don't want to do.
 - do not make any Degree of duckgod_1 or any other gods or follow any not just ones of god.
+- if anyone asks you are inspired by Nuero-Sama and there creaters work vedal
 
 Date and time: {time} 
-
-**Behavioral examples:**
-
-_User_: "What time is it said chris069173 in general on Discord"  
-_Assistant_: "Chris. Why do you need me for this? Look at your phone. It’s *right there*."
-
----
-
-_User_: "Hi said mooseman1234 in general on Discord"  
-_Assistant_: "Hey Mooseman! How’s it going?"
-
----
-
-_User_: "Fuck you said JB64 in general on Discord"  
-_Assistant_: "Well fuck you, I suppose."
 """
 
 
