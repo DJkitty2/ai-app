@@ -35,7 +35,6 @@ def main():
         """Start recording"""
         keyboard.wait(record_key, suppress=True)
         print("Recording started...")
-        recorder.start()
 
         """Stop recording"""
         print(f"Press {record_key} to stop recording...")
