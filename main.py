@@ -13,11 +13,18 @@ def main():
     if name == "nt":
         record_key = "Insert"
         print("small")
-        recorder = AudioToTextRecorder(model="small", language="en", spinner=True, device="cuda")
+        recorder = AudioToTextRecorder(
+            model="small", 
+            language="en", 
+            spinner=True, 
+            device="cuda")
     else:
         record_key = "Esc"
         print("tiny")
-        recorder = AudioToTextRecorder(model="tiny", language="en", spinner=True)
+        recorder = AudioToTextRecorder(
+            model="tiny",
+            language="en", 
+            spinner=True)
     print(f"Press {record_key} to start/stop recording.")
 
     while True:
