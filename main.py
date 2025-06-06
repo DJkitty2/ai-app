@@ -17,23 +17,19 @@ def main():
 
     if name == "nt":
         record_key = "Insert"
-        exit_key = "Ctrl+Esc"
         print("small")
-        recorder = AudioToTextRecorder(
-             model="small", language="en", spinner=True, device="cuda"
-        )
+        recorder = AudioToTextRecorder(model="small", language="en", spinner=True, device="cuda")
     else:
         record_key = "Esc"
-        exit_key = "Ctrl+Esc"
         print("tiny")
         recorder = AudioToTextRecorder(model="tiny", language="en", spinner=True)
-    recorder.start()
-    print(f"Press {record_key} to start/stop recording, or {exit_key} to exit...")
+    print(f"Press {record_key} to start/stop recording.")
 
     while True:
 
         """Start recording"""
         keyboard.wait(record_key, suppress=True)
+        recorder.start()
         print("Recording started...")
 
         """Stop recording"""
@@ -59,20 +55,9 @@ def main():
         #time.sleep(3)
         
         """Filter out thoughts and speak"""
-        timer_start()
         filtered_text = filter_thoughts(response_text)
         speak_text(filtered_text)
-        timer_stop()
         #pyautogui.typewrite(f"{filtered_text} \n \n", interval=0.01) # one or the other
-        print(f"Speak time: {timer_get()} seconds")
-        timer_reset()
-
-        """Check for exit key"""
-        print(f"Press {exit_key} to exit or {record_key} to record again...")
-        if keyboard.is_pressed(exit_key):
-            print("Exiting...")
-            break
-
 
 if __name__ == "__main__":
     main()

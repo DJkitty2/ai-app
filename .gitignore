@@ -6,3 +6,4 @@ realtimesst.log
 *.pyc
 music
 venv
+*.json
