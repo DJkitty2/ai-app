@@ -9,7 +9,7 @@ import pyautogui
 def main():
 
     name = os.name
-
+    
     if name == "nt":
         record_key = "Insert"
         print("small")
@@ -51,7 +51,7 @@ def main():
         
         """Filter out thoughts and speak"""
         speak_text(response_text)
-        #pyautogui.typewrite(f"{filtered_text} \n \n", interval=0.01) # one or the other
+        #pyautogui.typewrite(f"{response_text} \n \n", interval=0.01) # one or the other
 
 if __name__ == "__main__":
     main()
