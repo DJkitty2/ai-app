@@ -1,15 +1,10 @@
 from texttoollama import get_llama_response
 from texttospeach import speak_text
 from RealtimeSTT import AudioToTextRecorder
-import re
 import os
 import keyboard
 from timer2 import timer_start, timer_stop, timer_reset, timer_get
 import pyautogui
-
-def filter_thoughts(text):
-    """Remove content inside <think> tags."""
-    return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
 
 def main():
 
@@ -55,8 +50,7 @@ def main():
         #time.sleep(3)
         
         """Filter out thoughts and speak"""
-        filtered_text = filter_thoughts(response_text)
-        speak_text(filtered_text)
+        speak_text(response_text)
         #pyautogui.typewrite(f"{filtered_text} \n \n", interval=0.01) # one or the other
 
 if __name__ == "__main__":
