@@ -1,8 +1,10 @@
-from TTS.api import TTS
 import simpleaudio as sa
 import re
 import os
 import torch
+import soundfile as sf
+from kokoro_onnx import Kokoro
+
 
 if os.name == "nt":
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -18,16 +20,11 @@ def clean_text(text):
     return re.sub(r'[^\x00-\x7F]+', '', text)  # Keeps only standard ASCII characters
 
 def speak_text(text):
-    tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC", progress_bar=True)
-    text = clean_text(text)  # Clean text before passing to TTS
-    text = filter_thoughts(text)
-    tts.to(device)
-    tts.tts_to_file(
-        text=text,
-        file_path="output.wav"
-        )
-    
-    
+    kokoro = Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
+    samples, sample_rate = kokoro.create(
+        text=text, voice="af_sarah", speed=1.0, lang="en-us"
+    )
+    sf.write("output.wav", samples, sample_rate)
     wave_obj = sa.WaveObject.from_wave_file("output.wav")
     play_obj = wave_obj.play()
     play_obj.wait_done()
