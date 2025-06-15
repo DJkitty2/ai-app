@@ -20,7 +20,7 @@ def clean_text(text):
     return re.sub(r'[^\x00-\x7F]+', '', text)  # Keeps only standard ASCII characters
 
 def speak_text(text):
-    kokoro = Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
+    kokoro = Kokoro("models/voice/kokoro-v1.0.onnx", "models/voice/voices-v1.0.bin")
     samples, sample_rate = kokoro.create(
         text=text, voice="af_sarah", speed=1.0, lang="en-us"
     )
