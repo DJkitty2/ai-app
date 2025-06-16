@@ -1,4 +1,4 @@
-from texttoollama import get_llama_response
+from texttoollama import get_llama_response, clear_memorys
 from texttospeach import speak_text
 from RealtimeSTT import AudioToTextRecorder
 import os
@@ -43,6 +43,10 @@ def main():
         """Print transcription"""
         transcription = recorder.text()
         print("Transcription:", transcription)
+
+        """check for safe word"""
+        if "important safe word" in transcription:
+            clear_memorys()
 
         """Send to Llama"""
         timer_start()

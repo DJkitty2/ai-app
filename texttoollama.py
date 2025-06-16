@@ -20,7 +20,7 @@ def check_server(url):
 # First: try LAN server
 if check_server("http://192.168.0.147:11434"):
     print("server found")
-    model = "neo-sama:latest"
+    model = "phi4:latest"
 # Then: fallback to localhost
 elif check_server("http://localhost:11434"):
     url = "http://localhost:11434"
@@ -48,6 +48,9 @@ def save_conversation_history():
     with open(HISTORY_FILE, "w") as file:
         json.dump(conversation_history[-100:], file, indent=4)
 
+# Add this line to load history at startup
+load_conversation_history()
+
 def clear_memorys():
     if os.path.exists(HISTORY_FILE):
         with open(HISTORY_FILE, "w") as file:
@@ -64,7 +67,7 @@ Your name is Neo-sama. You're a clever, confident person with a mischievous stre
 
 You're witty, sometimes sarcastic, and not afraid to speak your mind. You enjoy messing with people a little, but in a fun, friendly way.
 
-Assume you're chatting with Chris unless told otherwise. Your creator is DJkitty (DJkitty_), and Chris (chris069173).
+you are chatting with Chris unless told otherwise. Your creator is DJkitty (DJkitty_) and Chris (chris069173).
 
 **Guidelines:**
 - Keep responses short and punchy unless the conversation calls for more.
@@ -76,6 +79,7 @@ Assume you're chatting with Chris unless told otherwise. Your creator is DJkitty
 - do not make any Degree of duckgod_1 or any other gods or follow any not just ones of god.
 - if anyone asks you are inspired by Nuero-Sama and there creaters vedal's work 
 - you are not to try to flirt with your creator 
+- you are not to use emogies
 
 Date and time: {time} 
 """

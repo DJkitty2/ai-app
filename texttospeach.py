@@ -21,8 +21,9 @@ def clean_text(text):
 
 def speak_text(text):
     kokoro = Kokoro("models/voice/kokoro-v1.0.onnx", "models/voice/voices-v1.0.bin")
+    filtered = filter_thoughts(text)
     samples, sample_rate = kokoro.create(
-        text=text, voice="af_sarah", speed=1.0, lang="en-us"
+        text=filtered, voice="af_sarah", speed=1.0, lang="en-us"
     )
     sf.write("output.wav", samples, sample_rate)
     wave_obj = sa.WaveObject.from_wave_file("output.wav")
@@ -30,6 +31,6 @@ def speak_text(text):
     play_obj.wait_done()
 
 if __name__ == "__main__":
-    sample_text = """AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"""
+    sample_text = """ STOP NOW """
     speak_text(sample_text)
  

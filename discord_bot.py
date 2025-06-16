@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
-from responses import get_response
+from responces import get_response
 import re
 from pytubefix import YouTube
 from pytubefix.cli import on_progress  # Import Pytube-specific exceptions
@@ -41,11 +41,11 @@ async def send_message(message: Message, user_message: str) -> None:
         else:
             if is_private:
                 # No typing indicator for DMs (optional)
-                response: str = await get_response(user_message, username, channel)
+                response: str = get_response(user_message, username, channel)
                 await message.author.send(response)
             else:
                 async with message.channel.typing():
-                    response: str = await get_response(user_message, username, channel)
+                    response: str = get_response(user_message, username, channel)
                     await message.channel.send(response)
     except Exception as e:
         print(f"Error: {e}")
