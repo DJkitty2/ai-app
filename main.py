@@ -1,5 +1,5 @@
 from texttoollama import get_llama_response, clear_memorys
-from texttospeach import speak_text
+from elevenlab import speak_text
 from RealtimeSTT import AudioToTextRecorder
 import os
 import keyboard
@@ -60,7 +60,7 @@ def main():
 
         #time.sleep(3)
         
-        """Filter out thoughts and speak"""
+        """speak"""
         speak_text(response_text)
         #pyautogui.typewrite(f"{response_text} \n \n", interval=0.01) # one or the other
 

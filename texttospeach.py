@@ -26,7 +26,7 @@ def speak_text(text):
         text=filtered, voice="af_sarah", speed=1.0, lang="en-us"
     )
     sf.write("output.wav", samples, sample_rate)
-    wave_obj = sa.WaveObject.from_wave_file("output.wav")
+    wave_obj = sa.WaveObject.from_wave_file("output.mp3")
     play_obj = wave_obj.play()
     play_obj.wait_done()
 
