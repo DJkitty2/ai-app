@@ -14,3 +14,4 @@ def speak_text(text):
         voice = voice_id
     )
     elevenlabs.play(audio)
+    elevenlabs.save(audio, "output.mp3")

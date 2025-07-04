@@ -3,8 +3,7 @@ import os
 import json
 import datetime
 import requests
-from bs4 import BeautifulSoup
-
+import base64
 
 url = "http://192.168.0.147:11434"
 
@@ -20,7 +19,7 @@ def check_server(url):
 # First: try LAN server
 if check_server("http://192.168.0.147:11434"):
     print("server found")
-    model = "phi4:latest"
+    model = "gemma3:12b"
 # Then: fallback to localhost
 elif check_server("http://localhost:11434"):
     url = "http://localhost:11434"
@@ -97,15 +96,21 @@ def get_llama_response(text):
             "content": system_prompt.format(time=time)
         })
     
-    # Append user message to history
-    conversation_history.append({"role": "user", "content": text})
+    #load image
+    with open("B:/pictures/IMG_7203(1).jpg", "rb") as f:
+        image_bytes = f.read()
+        image_b64 = base64.b64encode(image_bytes).decode('utf-8')
     
+    # Append user message to history
+    conversation_history.append({"role": "user",
+                                 "content": text,
+                             #    'images': [image_b64]
+                                 })
     # Send conversation history to Ollama
     client = ollama.Client(host=f"{url}")
     response = client.chat(
         model=model,
-        messages=conversation_history,
-        options={'enable_thinking': True}
+        messages=conversation_history
         )
     
     # Extract and append AI response to maintain context
@@ -118,5 +123,5 @@ def get_llama_response(text):
     return response_text
 
 if __name__ == "__main__":
-    example_text = """hows it going"""
+    example_text = """what is in the image"""
     print(get_llama_response(example_text))

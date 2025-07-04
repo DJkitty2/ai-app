@@ -26,11 +26,11 @@ def speak_text(text):
         text=filtered, voice="af_sarah", speed=1.0, lang="en-us"
     )
     sf.write("output.wav", samples, sample_rate)
-    wave_obj = sa.WaveObject.from_wave_file("output.mp3")
+    wave_obj = sa.WaveObject.from_wave_file("output.wav")
     play_obj = wave_obj.play()
     play_obj.wait_done()
 
 if __name__ == "__main__":
-    sample_text = """ STOP NOW """
+    sample_text = """ ligma """
     speak_text(sample_text)
  
